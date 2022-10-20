@@ -94,7 +94,7 @@ Firestarter::Firestarter(
     defined(_M_X64)
   this->_environment = new environment::x86::X86Environment();
 #else
-    this->_environment = new environment::generic::GenericEnvironment();
+  this->_environment = new environment::generic::GenericEnvironment();
 #endif
 
   if (EXIT_SUCCESS != (returnCode = this->environment().evaluateCpuAffinity(
