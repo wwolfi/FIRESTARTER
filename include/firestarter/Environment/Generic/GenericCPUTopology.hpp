@@ -25,14 +25,14 @@
 
 #include <asmjit/asmjit.h>
 
-namespace firestarter::environment::x86 {
+namespace firestarter::environment::generic {
 
-class X86CPUTopology final : public CPUTopology {
+class GenericCPUTopology final : public CPUTopology {
 public:
-  X86CPUTopology();
+  GenericCPUTopology();
 
   friend std::ostream &operator<<(std::ostream &stream,
-                                  X86CPUTopology const &cpuTopology);
+                                  GenericCPUTopology const &cpuTopology);
 
   std::list<std::string> const &features() const override {
     return this->featureList;
@@ -69,7 +69,7 @@ private:
 };
 
 inline std::ostream &operator<<(std::ostream &stream,
-                                X86CPUTopology const &cpuTopology) {
+                                GenericCPUTopology const &cpuTopology) {
   return cpuTopology.print(stream);
 }
 

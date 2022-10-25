@@ -28,11 +28,11 @@
 #include <intrin.h>
 #endif
 
-#include <firestarter/Environment/X86/Payload/X86Payload.hpp>
+#include <firestarter/Environment/Generic/Payload/GenericPayload.hpp>
 
-using namespace firestarter::environment::x86::payload;
+using namespace firestarter::environment::generic::payload;
 
-void X86Payload::lowLoadFunction(volatile unsigned long long *addrHigh,
+void GenericPayload::lowLoadFunction(volatile unsigned long long *addrHigh,
                                  unsigned long long period) {
   int nap;
 #ifdef _MSC_VER
@@ -70,7 +70,7 @@ void X86Payload::lowLoadFunction(volatile unsigned long long *addrHigh,
   }
 }
 
-void X86Payload::init(unsigned long long *memoryAddr,
+void GenericPayload::init(unsigned long long *memoryAddr,
                       unsigned long long bufferSize, double firstValue,
                       double lastValue) {
   unsigned long long i = 0;
@@ -85,7 +85,7 @@ void X86Payload::init(unsigned long long *memoryAddr,
 }
 
 unsigned long long
-X86Payload::highLoadFunction(unsigned long long *addrMem,
+GenericPayload::highLoadFunction(unsigned long long *addrMem,
                              volatile unsigned long long *addrHigh,
                              unsigned long long iterations) {
   return this->loadFunction(addrMem, addrHigh, iterations);
@@ -94,7 +94,7 @@ X86Payload::highLoadFunction(unsigned long long *addrMem,
 // add MM regs to dirty regs
 // zmm31 is used for backup if VectorReg is of type asmjit::x86::Zmm
 template <class IterReg, class VectorReg>
-void X86Payload::emitErrorDetectionCode(asmjit::x86::Builder &cb,
+void GenericPayload::emitErrorDetectionCode(asmjit::x86::Builder &cb,
                                         IterReg iter_reg,
                                         asmjit::x86::Gpq addrHigh_reg,
                                         asmjit::x86::Gpq pointer_reg,
@@ -464,23 +464,23 @@ void X86Payload::emitErrorDetectionCode(asmjit::x86::Builder &cb,
 }
 
 template void
-X86Payload::emitErrorDetectionCode<asmjit::x86::Gpq, asmjit::x86::Xmm>(
+GenericPayload::emitErrorDetectionCode<asmjit::x86::Gpq, asmjit::x86::Xmm>(
     asmjit::x86::Builder &cb, asmjit::x86::Gpq iter_reg,
     asmjit::x86::Gpq addrHigh_reg, asmjit::x86::Gpq pointer_reg,
     asmjit::x86::Gpq temp_reg, asmjit::x86::Gpq temp_reg2);
 template void
-X86Payload::emitErrorDetectionCode<asmjit::x86::Gpq, asmjit::x86::Ymm>(
+GenericPayload::emitErrorDetectionCode<asmjit::x86::Gpq, asmjit::x86::Ymm>(
     asmjit::x86::Builder &cb, asmjit::x86::Gpq iter_reg,
     asmjit::x86::Gpq addrHigh_reg, asmjit::x86::Gpq pointer_reg,
     asmjit::x86::Gpq temp_reg, asmjit::x86::Gpq temp_reg2);
 
 template void
-X86Payload::emitErrorDetectionCode<asmjit::x86::Mm, asmjit::x86::Ymm>(
+GenericPayload::emitErrorDetectionCode<asmjit::x86::Mm, asmjit::x86::Ymm>(
     asmjit::x86::Builder &cb, asmjit::x86::Mm iter_reg,
     asmjit::x86::Gpq addrHigh_reg, asmjit::x86::Gpq pointer_reg,
     asmjit::x86::Gpq temp_reg, asmjit::x86::Gpq temp_reg2);
 template void
-X86Payload::emitErrorDetectionCode<asmjit::x86::Mm, asmjit::x86::Zmm>(
+GenericPayload::emitErrorDetectionCode<asmjit::x86::Mm, asmjit::x86::Zmm>(
     asmjit::x86::Builder &cb, asmjit::x86::Mm iter_reg,
     asmjit::x86::Gpq addrHigh_reg, asmjit::x86::Gpq pointer_reg,
     asmjit::x86::Gpq temp_reg, asmjit::x86::Gpq temp_reg2);

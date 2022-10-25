@@ -19,7 +19,7 @@
  * Contact: daniel.hackenberg@tu-dresden.de
  *****************************************************************************/
 
-#include <firestarter/Environment/X86/X86CPUTopology.hpp>
+#include <firestarter/Environment/Generic/GenericCPUTopology.hpp>
 #include <firestarter/Logging/Log.hpp>
 
 #include <ctime>
@@ -31,7 +31,7 @@
 #pragma intrinsic(__rdtsc)
 #endif
 
-using namespace firestarter::environment::x86;
+using namespace firestarter::environment::generic;
 
 GenericCPUTopology::GenericCPUTopology()
     : CPUTopology("x86_64"), cpuInfo(asmjit::CpuInfo::host()),

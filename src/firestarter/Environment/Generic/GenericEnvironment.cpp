@@ -19,7 +19,7 @@
  * Contact: daniel.hackenberg@tu-dresden.de
  *****************************************************************************/
 
-#include <firestarter/Environment/X86/X86Environment.hpp>
+#include <firestarter/Environment/Generic/GenericEnvironment.hpp>
 #include <firestarter/Logging/Log.hpp>
 
 #include <algorithm>
@@ -28,7 +28,7 @@
 
 using namespace firestarter::environment::Generic;
 
-void X86Environment::evaluateFunctions() {
+void GenericEnvironment::evaluateFunctions() {
   for (auto ctor : this->platformConfigsCtor) {
     // add asmjit for model and family detection
     this->platformConfigs.push_back(
@@ -43,7 +43,7 @@ void X86Environment::evaluateFunctions() {
   }
 }
 
-int X86Environment::selectFunction(unsigned functionId,
+int GenericEnvironment::selectFunction(unsigned functionId,
                                    bool allowUnavailablePayload) {
   unsigned id = 1;
   std::string defaultPayloadName("");
@@ -135,7 +135,7 @@ int X86Environment::selectFunction(unsigned functionId,
   return EXIT_FAILURE;
 }
 
-int X86Environment::selectInstructionGroups(std::string groups) {
+int GenericEnvironment::selectInstructionGroups(std::string groups) {
   const std::string delimiter = ",";
   const std::regex re("^(\\w+):(\\d+)$");
   const auto availableInstructionGroups = this->selectedConfig()
@@ -186,7 +186,7 @@ int X86Environment::selectInstructionGroups(std::string groups) {
   return EXIT_SUCCESS;
 }
 
-void X86Environment::printAvailableInstructionGroups() {
+void GenericEnvironment::printAvailableInstructionGroups() {
   std::stringstream ss;
 
   for (auto const &item : this->selectedConfig()
@@ -207,15 +207,15 @@ void X86Environment::printAvailableInstructionGroups() {
               << "  " << s;
 }
 
-void X86Environment::setLineCount(unsigned lineCount) {
+void GenericEnvironment::setLineCount(unsigned lineCount) {
   this->selectedConfig().setLineCount(lineCount);
 }
 
-void X86Environment::printSelectedCodePathSummary() {
+void GenericEnvironment::printSelectedCodePathSummary() {
   this->selectedConfig().printCodePathSummary();
 }
 
-void X86Environment::printFunctionSummary() {
+void GenericEnvironment::printFunctionSummary() {
   log::info() << " available load-functions:\n"
               << "  ID   | NAME                           | available on this "
                  "system | payload default setting\n"
