@@ -93,6 +93,7 @@ Firestarter::Firestarter(
 #if defined(__i386__) || defined(_M_IX86) || defined(__x86_64__) ||            \
     defined(_M_X64)
   this->_environment = new environment::x86::X86Environment();
+  this->_environment = new environment::generic::GenericEnvironment();
 #else
   this->_environment = new environment::generic::GenericEnvironment();
 #endif

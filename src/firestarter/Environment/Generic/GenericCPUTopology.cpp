@@ -33,7 +33,7 @@
 
 using namespace firestarter::environment::x86;
 
-X86CPUTopology::X86CPUTopology()
+GenericCPUTopology::GenericCPUTopology()
     : CPUTopology("x86_64"), cpuInfo(asmjit::CpuInfo::host()),
       cpuFeatures(cpuInfo.features<asmjit::x86::Features>()),
       _vendor(this->cpuInfo.vendor()) {
@@ -134,7 +134,7 @@ X86CPUTopology::X86CPUTopology()
 // only constant TSCs will be used (i.e. power management indepent TSCs)
 // save frequency in highest P-State or use generic fallback if no invarient TSC
 // is available
-unsigned long long X86CPUTopology::clockrate() const {
+unsigned long long GenericCPUTopology::clockrate() const {
   typedef std::chrono::high_resolution_clock Clock;
   typedef std::chrono::microseconds ticks;
 
@@ -211,7 +211,7 @@ unsigned long long X86CPUTopology::clockrate() const {
   return clockrate;
 }
 
-unsigned long long X86CPUTopology::timestamp() const {
+unsigned long long GenericCPUTopology::timestamp() const {
 #ifndef _MSC_VER
   unsigned long long reg_a, reg_d;
 #else
@@ -231,8 +231,8 @@ unsigned long long X86CPUTopology::timestamp() const {
 #endif
 }
 
-void X86CPUTopology::cpuid(unsigned long long *a, unsigned long long *b,
-                           unsigned long long *c, unsigned long long *d) const {
+void GenericCPUTopology::cpuid(unsigned long long *a, unsigned long long *b,
+                               unsigned long long *c, unsigned long long *d) const {
 #ifndef _MSC_VER
   unsigned long long reg_a, reg_b, reg_c, reg_d;
 
