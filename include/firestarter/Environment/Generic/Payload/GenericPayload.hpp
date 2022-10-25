@@ -33,12 +33,8 @@
 
 namespace firestarter::environment::generic::payload {
 
-    class GenericPayload : public environment::payload::Payload {
-    private:
-
-
+class GenericPayload : public environment::payload::Payload {
     protected:
-
         // typedef int (*LoadFunction)(firestarter::ThreadData *);
         typedef unsigned long long (*LoadFunction)(unsigned long long *,
                                                    volatile unsigned long long *,
@@ -49,7 +45,7 @@ namespace firestarter::environment::generic::payload {
 
     public:
         GenericPayload(std::string name, unsigned registerSize, unsigned registerCount)
-                : Payload(name, registerSize, registerCount);
+                : Payload(name, registerSize, registerCount) {}
 
         // A generic implemenation for all x86 payloads
 #if defined(__clang__)
