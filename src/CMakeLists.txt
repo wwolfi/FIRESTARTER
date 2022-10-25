@@ -9,17 +9,23 @@ SET(FIRESTARTER_FILES
 	firestarter/Environment/CPUTopology.cpp
 	firestarter/Environment/Payload/Payload.cpp
 
-	# here starts the x86 specific code
-	firestarter/Environment/X86/X86Environment.cpp
-	firestarter/Environment/X86/X86CPUTopology.cpp
+	# generic code
+	firestarter/Environment/Generic/GenericEnvironment.cpp
+	firestarter/Environment/Generic/GenericCPUTopology.cpp
+	firestarter/Environment/Generic/Payload/GenericPayload.cpp
 
-	firestarter/Environment/X86/Payload/X86Payload.cpp
-	firestarter/Environment/X86/Payload/AVX512Payload.cpp
-	firestarter/Environment/X86/Payload/FMA4Payload.cpp
-	firestarter/Environment/X86/Payload/FMAPayload.cpp
-	firestarter/Environment/X86/Payload/ZENFMAPayload.cpp
-	firestarter/Environment/X86/Payload/AVXPayload.cpp
-	firestarter/Environment/X86/Payload/SSE2Payload.cpp
+	# here starts the x86 specific code
+
+	#firestarter/Environment/X86/X86Environment.cpp
+	#firestarter/Environment/X86/X86CPUTopology.cpp
+
+	#firestarter/Environment/X86/Payload/X86Payload.cpp
+	#firestarter/Environment/X86/Payload/AVX512Payload.cpp
+	#firestarter/Environment/X86/Payload/FMA4Payload.cpp
+	#firestarter/Environment/X86/Payload/FMAPayload.cpp
+	#firestarter/Environment/X86/Payload/ZENFMAPayload.cpp
+	#firestarter/Environment/X86/Payload/AVXPayload.cpp
+	#firestarter/Environment/X86/Payload/SSE2Payload.cpp
 	)
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
