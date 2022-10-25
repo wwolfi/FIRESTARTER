@@ -23,8 +23,6 @@
 
 #include <firestarter/Environment/CPUTopology.hpp>
 
-#include <asmjit/asmjit.h>
-
 namespace firestarter::environment::generic {
 
 class GenericCPUTopology final : public CPUTopology {
@@ -37,9 +35,6 @@ public:
   std::list<std::string> const &features() const override {
     return this->featureList;
   }
-  asmjit::x86::Features const &featuresAsmjit() const {
-    return this->cpuFeatures;
-  }
 
   std::string const &vendor() const override { return this->_vendor; }
   std::string const &model() const override { return this->_model; }
@@ -48,18 +43,12 @@ public:
 
   unsigned long long timestamp() const override;
 
-  unsigned familyId() const { return this->cpuInfo.familyId(); }
-  unsigned modelId() const { return this->cpuInfo.modelId(); }
-  unsigned stepping() const { return this->cpuInfo.stepping(); }
-
 private:
   bool hasRdtsc() const { return this->_hasRdtsc; }
   bool hasInvariantRdtsc() const { return this->_hasInvariantRdtsc; }
   void cpuid(unsigned long long *a, unsigned long long *b,
              unsigned long long *c, unsigned long long *d) const;
 
-  asmjit::CpuInfo cpuInfo;
-  const asmjit::x86::Features cpuFeatures;
   std::list<std::string> featureList;
 
   bool _hasRdtsc;
@@ -73,4 +62,4 @@ inline std::ostream &operator<<(std::ostream &stream,
   return cpuTopology.print(stream);
 }
 
-} // namespace firestarter::environment::x86
+} // namespace firestarter::environment::generic

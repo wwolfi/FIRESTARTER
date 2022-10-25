@@ -22,17 +22,10 @@
 #pragma once
 
 #include <firestarter/Environment/Environment.hpp>
-
-
-#include <asmjit/asmjit.h>
+#include <firestarter/Environment/Generic/GenericCPUTopology.hpp>
 
 #include <functional>
 
-#define REGISTER(NAME)                                                         \
-  [](asmjit::x86::Features const &supportedFeatures, unsigned family,          \
-     unsigned model, unsigned threads) -> platform::X86PlatformConfig * {      \
-    return new platform::NAME(supportedFeatures, family, model, threads);      \
-  }
 
 namespace firestarter::environment::generic {
 
