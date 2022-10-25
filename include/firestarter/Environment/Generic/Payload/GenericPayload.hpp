@@ -27,76 +27,51 @@
 #include <firestarter/DumpRegisterWorkerData.hpp>
 #include <firestarter/LoadWorkerData.hpp>
 
-#include <asmjit/x86.h>
+
 
 #define INIT_BLOCKSIZE 1024
 
 namespace firestarter::environment::generic::payload {
 
-class GenericPayload : public environment::payload::Payload {
-private:
-  // we can use this to check, if our platform support this payload
-  asmjit::x86::Features const &_supportedFeatures;
-  std::list<asmjit::x86::Features::Id> featureRequests;
+    class GenericPayload : public environment::payload::Payload {
+    private:
 
-protected:
-  //  asmjit::CodeHolder code;
-  asmjit::JitRuntime rt;
-  // typedef int (*LoadFunction)(firestarter::ThreadData *);
-  typedef unsigned long long (*LoadFunction)(unsigned long long *,
-                                             volatile unsigned long long *,
-                                             unsigned long long);
-  LoadFunction loadFunction = nullptr;
 
-  asmjit::x86::Features const &supportedFeatures() const {
-    return this->_supportedFeatures;
-  }
+    protected:
 
-  template <class IterReg, class VectorReg>
-  void emitErrorDetectionCode(asmjit::x86::Builder &cb, IterReg iter_reg,
-                              asmjit::x86::Gpq addrHigh_reg,
-                              asmjit::x86::Gpq pointer_reg,
-                              asmjit::x86::Gpq temp_reg,
-                              asmjit::x86::Gpq temp_reg2);
+        // typedef int (*LoadFunction)(firestarter::ThreadData *);
+        typedef unsigned long long (*LoadFunction)(unsigned long long *,
+                                                   volatile unsigned long long *,
+                                                   unsigned long long);
+        LoadFunction loadFunction = nullptr;
 
-public:
-  X86Payload(asmjit::x86::Features const &supportedFeatures,
-             std::initializer_list<asmjit::x86::Features::Id> featureRequests,
-             std::string name, unsigned registerSize, unsigned registerCount)
-      : Payload(name, registerSize, registerCount),
-        _supportedFeatures(supportedFeatures),
-        featureRequests(featureRequests) {}
+        template <class IterReg, class VectorReg>
 
-  bool isAvailable() const override {
-    bool available = true;
+    public:
+        GenericPayload(std::string name, unsigned registerSize, unsigned registerCount)
+                : Payload(name, registerSize, registerCount);
 
-    for (auto const &feature : featureRequests) {
-      available &= this->_supportedFeatures.has(feature);
-    }
-
-    return available;
-  };
-
-    // A generic implemenation for all x86 payloads
+        // A generic implemenation for all x86 payloads
 #if defined(__clang__)
-#pragma clang diagnostic push
+        #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Woverloaded-virtual"
 #endif
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Woverloaded-virtual"
-  void init(unsigned long long *memoryAddr, unsigned long long bufferSize,
-            double firstValue, double lastValue);
+        void init(unsigned long long *memoryAddr, unsigned long long bufferSize,
+                  double firstValue, double lastValue);
 #pragma GCC diagnostic pop
 #if defined(__clang__)
 #pragma clang diagnostic pop
 #endif
-  // use cpuid and usleep as low load
-  void lowLoadFunction(volatile unsigned long long *addrHigh,
-                       unsigned long long period) override;
+        // use cpuid and usleep as low load
+        void lowLoadFunction(volatile unsigned long long *addrHigh,
+                             unsigned long long period) override;
 
-  unsigned long long highLoadFunction(unsigned long long *addrMem,
-                                      volatile unsigned long long *addrHigh,
-                                      unsigned long long iterations) override;
-};
+        unsigned long long highLoadFunction(unsigned long long *addrMem,
+                                            volatile unsigned long long *addrHigh,
+                                            unsigned long long iterations) override;
+    };
 
-} // namespace firestarter::environment::x86::payload
+} // namespace firestarter::environment::generic::payload
+
