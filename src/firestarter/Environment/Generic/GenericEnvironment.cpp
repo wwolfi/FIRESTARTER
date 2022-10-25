@@ -26,21 +26,10 @@
 #include <cstdio>
 #include <regex>
 
-using namespace firestarter::environment::Generic;
+using namespace firestarter::environment::generic;
 
 void GenericEnvironment::evaluateFunctions() {
-  for (auto ctor : this->platformConfigsCtor) {
-    // add asmjit for model and family detection
-    this->platformConfigs.push_back(
-        ctor(this->topology().featuresAsmjit(), this->topology().familyId(),
-             this->topology().modelId(), this->topology().numThreadsPerCore()));
-  }
 
-  for (auto ctor : this->fallbackPlatformConfigsCtor) {
-    this->fallbackPlatformConfigs.push_back(
-        ctor(this->topology().featuresAsmjit(), this->topology().familyId(),
-             this->topology().modelId(), this->topology().numThreadsPerCore()));
-  }
 }
 
 int GenericEnvironment::selectFunction(unsigned functionId,
@@ -48,39 +37,6 @@ int GenericEnvironment::selectFunction(unsigned functionId,
   unsigned id = 1;
   std::string defaultPayloadName("");
 
-  // if functionId is 0 get the default or fallback
-  for (auto config : this->platformConfigs) {
-    for (auto const &[thread, functionName] : config->getThreadMap()) {
-      // the selected function
-      if (id == functionId) {
-        if (!config->isAvailable()) {
-          log::error() << "Function " << functionId << " (\"" << functionName
-                       << "\") requires " << config->payload().name()
-                       << ", which is not supported by the processor.";
-          if (!allowUnavailablePayload) {
-            return EXIT_FAILURE;
-          }
-        }
-        // found function
-        this->_selectedConfig =
-            new ::firestarter::environment::platform::RuntimeConfig(
-                *config, thread, this->topology().instructionCacheSize());
-        return EXIT_SUCCESS;
-      }
-      // default function
-      if (0 == functionId && config->isDefault()) {
-        if (thread == this->topology().numThreadsPerCore()) {
-          this->_selectedConfig =
-              new ::firestarter::environment::platform::RuntimeConfig(
-                  *config, thread, this->topology().instructionCacheSize());
-          return EXIT_SUCCESS;
-        } else {
-          defaultPayloadName = config->payload().name();
-        }
-      }
-      id++;
-    }
-  }
 
   // no default found
   // use fallback
@@ -98,33 +54,6 @@ int GenericEnvironment::selectFunction(unsigned functionId,
 
     // loop over available implementation and check if they are marked as
     // fallback
-    for (auto config : this->fallbackPlatformConfigs) {
-      if (config->isAvailable()) {
-        auto selectedThread = 0;
-        auto selectedFunctionName = std::string("");
-        for (auto const &[thread, functionName] : config->getThreadMap()) {
-          if (thread == this->topology().numThreadsPerCore()) {
-            selectedThread = thread;
-            selectedFunctionName = functionName;
-          }
-        }
-        if (selectedThread == 0) {
-          selectedThread = config->getThreadMap().begin()->first;
-          selectedFunctionName = config->getThreadMap().begin()->second;
-        }
-        this->_selectedConfig =
-            new ::firestarter::environment::platform::RuntimeConfig(
-                *config, selectedThread,
-                this->topology().instructionCacheSize());
-        log::warn() << "Using function " << selectedFunctionName
-                    << " as fallback.\n"
-                    << "You can use the parameter --function to try other "
-                       "functions.";
-        return EXIT_SUCCESS;
-      }
-    }
-
-    // no fallback found
     log::error() << "No fallback implementation found for available ISA "
                     "extensions.";
     return EXIT_FAILURE;
@@ -225,20 +154,4 @@ void GenericEnvironment::printFunctionSummary() {
                  "-----------------------------";
 
   unsigned id = 1;
-
-  for (auto const &config : this->platformConfigs) {
-    for (auto const &[thread, functionName] : config->getThreadMap()) {
-      const char *available = config->isAvailable() ? "yes" : "no";
-      const char *fmt = "  %4u | %-30s | %-24s | %s";
-      int sz =
-          std::snprintf(nullptr, 0, fmt, id, functionName.c_str(), available,
-                        config->getDefaultPayloadSettingsString().c_str());
-      std::vector<char> buf(sz + 1);
-      std::snprintf(&buf[0], buf.size(), fmt, id, functionName.c_str(),
-                    available,
-                    config->getDefaultPayloadSettingsString().c_str());
-      log::info() << std::string(&buf[0]);
-      id++;
-    }
-  }
 }

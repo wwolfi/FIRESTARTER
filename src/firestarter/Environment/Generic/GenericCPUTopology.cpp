@@ -34,29 +34,11 @@
 using namespace firestarter::environment::generic;
 
 GenericCPUTopology::GenericCPUTopology()
-    : CPUTopology("x86_64"), cpuInfo(asmjit::CpuInfo::host()),
-      cpuFeatures(cpuInfo.features<asmjit::x86::Features>()),
-      _vendor(this->cpuInfo.vendor()) {
+    : CPUTopology("generic"){
 
   std::stringstream ss;
-  ss << "Family " << this->familyId() << ", Model " << this->modelId()
-     << ", Stepping " << this->stepping();
+
   this->_model = ss.str();
-
-  for (int i = 0; i < (int)asmjit::x86::Features::kMaxFeatures; i++) {
-    if (!this->cpuFeatures.has(i)) {
-      continue;
-    }
-
-    asmjit::String sb;
-
-    auto error = asmjit::Formatter::formatFeature(sb, this->cpuInfo.arch(), i);
-    if (error != asmjit::ErrorCode::kErrorOk) {
-      log::warn() << "Formatting cpu features got asmjit error: " << error;
-    }
-
-    this->featureList.push_back(std::string(sb.data()));
-  }
 
   unsigned long long a = 0, b = 0, c = 0, d = 0;
 
