@@ -39,7 +39,7 @@
 
 #if defined(__i386__) || defined(_M_IX86) || defined(__x86_64__) ||            \
     defined(_M_X64)
-#include <firestarter/Environment/X86/X86Environment.hpp>
+#include <firestarter/Environment/Generic/GenericEnvironment.hpp>
 #endif
 
 #include <chrono>
@@ -119,9 +119,9 @@ private:
 
 #if defined(__i386__) || defined(_M_IX86) || defined(__x86_64__) ||            \
     defined(_M_X64)
-  environment::x86::X86Environment *_environment = nullptr;
+  environment::generic::GenericEnvironment *_environment = nullptr;
 
-  environment::x86::X86Environment &environment() const {
+  environment::generic::GenericEnvironment &environment() const {
     return *_environment;
   }
 #else
