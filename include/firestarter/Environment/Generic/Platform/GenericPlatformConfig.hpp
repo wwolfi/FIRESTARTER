@@ -22,11 +22,11 @@
 #pragma once
 
 #include <firestarter/Environment/Platform/PlatformConfig.hpp>
-#include <firestarter/Environment/X86/Payload/X86Payload.hpp>
+#include <firestarter/Environment/Generic/Payload/GenericPayload.hpp>
 
-namespace firestarter::environment::x86::platform {
+namespace firestarter::environment::generic::platform {
 
-class X86PlatformConfig : public environment::platform::PlatformConfig {
+class GenericPlatformConfig : public environment::platform::PlatformConfig {
 private:
   unsigned _family;
   std::list<unsigned> _models;
@@ -35,14 +35,14 @@ private:
   unsigned _currentThreads;
 
 public:
-  X86PlatformConfig(std::string name, unsigned family,
+  GenericPlatformConfig(std::string name, unsigned family,
                     std::initializer_list<unsigned> models,
                     std::initializer_list<unsigned> threads,
                     unsigned instructionCacheSize,
                     std::initializer_list<unsigned> dataCacheBufferSize,
                     unsigned ramBuffersize, unsigned lines,
                     unsigned currentFamily, unsigned currentModel,
-                    unsigned currentThreads, payload::X86Payload *payload)
+                    unsigned currentThreads, payload::GenericPayload *payload)
       : PlatformConfig(name, threads, instructionCacheSize, dataCacheBufferSize,
                        ramBuffersize, lines, payload),
         _family(family), _models(models), _currentFamily(currentFamily),
