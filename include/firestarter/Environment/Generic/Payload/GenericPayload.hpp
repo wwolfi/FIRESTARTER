@@ -41,8 +41,6 @@ class GenericPayload : public environment::payload::Payload {
                                                    unsigned long long);
         LoadFunction loadFunction = nullptr;
 
-        template <class IterReg, class VectorReg>
-
     public:
         GenericPayload(std::string name, unsigned registerSize, unsigned registerCount)
                 : Payload(name, registerSize, registerCount) {}
