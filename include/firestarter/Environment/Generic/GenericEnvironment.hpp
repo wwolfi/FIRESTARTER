@@ -60,4 +60,4 @@ private:
 #undef REGISTER
 };
 
-} // namespace firestarter::environment::x86
+} // namespace firestarter::environment::generic
