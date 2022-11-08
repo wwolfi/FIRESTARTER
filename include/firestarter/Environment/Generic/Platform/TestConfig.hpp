@@ -21,19 +21,17 @@
 
 #pragma once
 
-#include <firestarter/Environment/X86/Payload/FMAPayload.hpp>
-#include <firestarter/Environment/X86/Platform/X86PlatformConfig.hpp>
+#include <firestarter/Environment/Generic/Platform/GenericPlatformConfig.hpp>
 
-namespace firestarter::environment::x86::platform {
-class HaswellConfig final : public X86PlatformConfig {
+namespace firestarter::environment::generic::platform {
+class TestConfig final : public GenericPlatformConfig {
 
 public:
-  HaswellConfig(asmjit::x86::Features const &supportedFeatures, unsigned family,
-                unsigned model, unsigned threads)
-      : X86PlatformConfig("HSW_COREI", 6, {60, 61, 69, 70, 71}, {1, 2}, 0,
+  TestConfig(unsigned family, unsigned model, unsigned threads)
+      : GenericPlatformConfig("TestConfig", 6, {60, 61, 69, 70, 71}, {1, 2}, 0,
                           {32768, 262144, 1572864}, 104857600, 1536, family,
                           model, threads,
-                          new payload::FMAPayload(supportedFeatures)) {}
+                          new payload::GenericPayload()) {}
 
   std::vector<std::pair<std::string, unsigned>>
   getDefaultPayloadSettings() const override {
@@ -41,4 +39,4 @@ public:
         {{"RAM_L", 2}, {"L3_LS", 3}, {"L2_LS", 9}, {"L1_LS", 90}, {"REG", 40}});
   }
 };
-} // namespace firestarter::environment::x86::platform
+} // namespace firestarter::environment::generic::platform
