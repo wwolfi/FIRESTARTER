@@ -57,8 +57,3 @@ GenericPayload::highLoadFunction(unsigned long long *addrMem,
                              unsigned long long iterations) {
   return this->loadFunction(addrMem, addrHigh, iterations);
 }
-
-bool GenericPayload::isAvailable() {
-    return false;
-}
-
