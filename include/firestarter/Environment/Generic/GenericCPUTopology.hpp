@@ -25,41 +25,44 @@
 
 namespace firestarter::environment::generic {
 
-class GenericCPUTopology final : public CPUTopology {
-public:
-  GenericCPUTopology();
+    class GenericCPUTopology final : public CPUTopology {
+    public:
+        GenericCPUTopology();
 
-  friend std::ostream &operator<<(std::ostream &stream,
-                                  GenericCPUTopology const &cpuTopology);
+        friend std::ostream &operator<<(std::ostream &stream,
+                                        GenericCPUTopology const &cpuTopology);
 
-  std::list<std::string> const &features() const override {
-    return this->featureList;
-  }
+        std::list<std::string> const &features() const override {
+            return this->featureList;
+        }
 
-  std::string const &vendor() const override { return this->_vendor; }
-  std::string const &model() const override { return this->_model; }
+        std::string const &vendor() const override { return this->_vendor; }
 
-  unsigned long long clockrate() const override;
+        std::string const &model() const override { return this->_model; }
 
-  unsigned long long timestamp() const override;
+        unsigned long long clockrate() const override;
 
-private:
-  bool hasRdtsc() const { return this->_hasRdtsc; }
-  bool hasInvariantRdtsc() const { return this->_hasInvariantRdtsc; }
-  void cpuid(unsigned long long *a, unsigned long long *b,
-             unsigned long long *c, unsigned long long *d) const;
+        unsigned long long timestamp() const override;
 
-  std::list<std::string> featureList;
+    private:
+        bool hasRdtsc() const { return this->_hasRdtsc; }
 
-  bool _hasRdtsc;
-  bool _hasInvariantRdtsc;
-  std::string _vendor;
-  std::string _model;
-};
+        bool hasInvariantRdtsc() const { return this->_hasInvariantRdtsc; }
 
-inline std::ostream &operator<<(std::ostream &stream,
-                                GenericCPUTopology const &cpuTopology) {
-  return cpuTopology.print(stream);
-}
+        void cpuid(unsigned long long *a, unsigned long long *b,
+                   unsigned long long *c, unsigned long long *d) const;
+
+        std::list<std::string> featureList;
+
+        bool _hasRdtsc;
+        bool _hasInvariantRdtsc;
+        std::string _vendor;
+        std::string _model;
+    };
+
+    inline std::ostream &operator<<(std::ostream &stream,
+                                    GenericCPUTopology const &cpuTopology) {
+        return cpuTopology.print(stream);
+    }
 
 } // namespace firestarter::environment::generic
