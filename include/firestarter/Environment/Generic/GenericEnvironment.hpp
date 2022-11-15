@@ -29,8 +29,8 @@
 #include <functional>
 
 #define REGISTER(NAME)                                                         \
-  [](unsigned family, unsigned model, unsigned threads) -> platform::GenericPlatformConfig * {      \
-    return new platform::NAME(family, model, threads);      \
+  [](unsigned threads) -> platform::GenericPlatformConfig * {      \
+    return new platform::NAME(threads);      \
   }
 
 
@@ -41,9 +41,9 @@ public:
   GenericEnvironment() : Environment(new GenericCPUTopology()) {}
 
   ~GenericEnvironment() {
-      //for (auto const &config : platformConfigs) {
-      //    delete config;
-      //}
+      for (auto const &config : platformConfigs) {
+          delete config;
+      }
   }
 
   GenericCPUTopology const &topology() {

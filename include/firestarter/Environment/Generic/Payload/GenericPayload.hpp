@@ -42,8 +42,8 @@ class GenericPayload : public environment::payload::Payload {
         LoadFunction loadFunction = nullptr;
 
     public:
-        GenericPayload(std::string name, unsigned registerSize, unsigned registerCount)
-                : Payload(name, registerSize, registerCount) {}
+        GenericPayload(std::string name)
+                : Payload(name, 0, 0) {}
 
         // A generic implemenation for all x86 payloads
 #if defined(__clang__)

@@ -29,11 +29,10 @@ class TestConfig final : public GenericPlatformConfig {
 
 public:
     std::string name = "Testconfig";
-  TestConfig(unsigned family, unsigned model, unsigned threads)
+  TestConfig(unsigned threads)
       : GenericPlatformConfig("TestConfig", 6, {60, 61, 69, 70, 71}, {1, 2}, 0,
-                          {32768, 262144, 1572864}, 104857600, 1536, family,
-                          model, threads,
-                          new payload::GenericPayload(name, 4, 16)) {}
+                          {32768, 262144, 1572864}, 104857600, 1536, threads,
+                          new payload::GenericPayload(name, 4)) {}
 
   std::vector<std::pair<std::string, unsigned>>
   getDefaultPayloadSettings() const override {

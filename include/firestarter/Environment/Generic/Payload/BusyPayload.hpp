@@ -27,7 +27,7 @@ namespace firestarter::environment::generic::payload {
 class BusyPayload final : public GenericPayload {
 public:
   BusyPayload()
-      : GenericPayload("BusyPayload", 2, 16) {}
+      : GenericPayload("BusyPayload") {}
 
   int compilePayload(
       std::vector<std::pair<std::string, unsigned>> const &proportion,
