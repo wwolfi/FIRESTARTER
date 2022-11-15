@@ -35,18 +35,10 @@ private:
   unsigned _currentThreads;
 
 public:
-  GenericPlatformConfig(std::string name, unsigned family,
-                    std::initializer_list<unsigned> models,
-                    std::initializer_list<unsigned> threads,
-                    unsigned instructionCacheSize,
-                    std::initializer_list<unsigned> dataCacheBufferSize,
-                    unsigned ramBuffersize, unsigned lines,
-                    unsigned currentFamily, unsigned currentModel,
-                    unsigned currentThreads, payload::GenericPayload *payload)
-      : PlatformConfig(name, threads, instructionCacheSize, dataCacheBufferSize,
-                       ramBuffersize, lines, payload),
-        _family(family), _models(models), _currentFamily(currentFamily),
-        _currentModel(currentModel), _currentThreads(currentThreads) {}
+  GenericPlatformConfig(std::string name, std::initializer_list<unsigned> threads,
+                    payload::GenericPayload *payload)
+      : PlatformConfig(name, threads, 0, std::initializer_list<unsigned> test,
+                       0, 0, payload){}
 
   bool isDefault() const override {
     return _family == _currentFamily &&
