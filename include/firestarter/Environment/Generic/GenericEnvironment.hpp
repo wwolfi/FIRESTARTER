@@ -64,8 +64,7 @@ private:
   // PlatformConfig. Add new PlatformConfig at the bottom to maintain stable
   // IDs.
 
-    const std::list<std::function<platform::GenericPlatformConfig *(
-            unsigned, unsigned, unsigned)>>
+    const std::list<std::function<platform::GenericPlatformConfig *(unsigned)>>
     platformConfigsCtor = {
             REGISTER(TestConfig)};
 

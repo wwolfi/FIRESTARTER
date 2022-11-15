@@ -22,17 +22,17 @@
 #pragma once
 
 #include <firestarter/Environment/Generic/Platform/GenericPlatformConfig.hpp>
-#include <firestarter/Environment/Generic/Payload/GenericPayload.hpp>
+#include <firestarter/Environment/Generic/Payload/BusyPayload.hpp>
 
 namespace firestarter::environment::generic::platform {
 class TestConfig final : public GenericPlatformConfig {
 
 public:
-    std::string name = "Testconfig";
+    std::string name = "TestConfig";
   TestConfig(unsigned threads)
-      : GenericPlatformConfig("TestConfig", 6, {60, 61, 69, 70, 71}, {1, 2}, 0,
+      : GenericPlatformConfig(name, 6, {60, 61, 69, 70, 71}, {1, 2}, 0,
                           {32768, 262144, 1572864}, 104857600, 1536, threads,
-                          new payload::GenericPayload(name, 4)) {}
+                          new payload::BusyPayload(name)) {}
 
   std::vector<std::pair<std::string, unsigned>>
   getDefaultPayloadSettings() const override {
