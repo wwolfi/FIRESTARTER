@@ -29,12 +29,8 @@ public:
   BusyPayload(std::string name)
       : GenericPayload(name) {}
 
-  int compilePayload(
-      std::vector<std::pair<std::string, unsigned>> const &proportion,
-      unsigned instructionCacheSize,
-      std::list<unsigned> const &dataCacheBufferSize, unsigned ramBufferSize,
-      unsigned thread, unsigned numberOfLines, bool dumpRegisters,
-      bool errorDetection) override;
+  int compilePayload(unsigned thread) override;
+
   std::list<std::string> getAvailableInstructions() const override;
   void init(unsigned long long *memoryAddr,
             unsigned long long bufferSize) override;
