@@ -40,7 +40,7 @@ public:
             unsigned long long bufferSize) override;
 
   firestarter::environment::payload::Payload *clone() const override {
-    return new BusyPayload();
+    return new BusyPayload("clonedPayload");
   };
 
 private:

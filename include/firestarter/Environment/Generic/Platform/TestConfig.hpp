@@ -30,8 +30,7 @@ class TestConfig final : public GenericPlatformConfig {
 public:
     std::string name = "TestConfig";
   TestConfig(unsigned threads)
-      : GenericPlatformConfig(name, 6, {60, 61, 69, 70, 71}, {1, 2}, 0,
-                          {32768, 262144, 1572864}, 104857600, 1536, threads,
+      : GenericPlatformConfig(name, {1, 2}, threads,
                           new payload::BusyPayload(name)) {}
 
   std::vector<std::pair<std::string, unsigned>>

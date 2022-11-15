@@ -36,9 +36,9 @@ private:
 
 public:
   GenericPlatformConfig(std::string name, std::initializer_list<unsigned> threads,
-                    payload::GenericPayload *payload)
+                        unsigned currentThreads, payload::GenericPayload *payload)
       : PlatformConfig(name, threads, 0, {},
-                       0, 0, payload){}
+                       0, 0, payload), _currentThreads(currentThreads){}
 
   bool isDefault() const override {
     return _family == _currentFamily &&
