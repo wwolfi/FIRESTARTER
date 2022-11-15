@@ -57,3 +57,11 @@ GenericPayload::highLoadFunction(unsigned long long *addrMem,
                              unsigned long long iterations) {
   return this->loadFunction(addrMem, addrHigh, iterations);
 }
+
+int GenericPayload::compilePayload(const std::vector<std::pair<std::string, unsigned int>> &proportion,
+                                   unsigned int instructionCacheSize,
+                                   const std::list<unsigned int> &dataCacheBufferSize, unsigned int ramBufferSize,
+                                   unsigned int thread, unsigned int numberOfLines, bool dumpRegisters,
+                                   bool errorDetection) {
+    return 0;
+}

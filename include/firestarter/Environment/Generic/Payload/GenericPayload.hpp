@@ -74,9 +74,10 @@ class GenericPayload : public environment::payload::Payload {
             return true;
         }
 
-        virtual int compilePayload(unsigned int thread) {
-            return 0;
-        }
+        int compilePayload(const std::vector<std::pair<std::string, unsigned int>> &proportion,
+                           unsigned int instructionCacheSize, const std::list<unsigned int> &dataCacheBufferSize,
+                           unsigned int ramBufferSize, unsigned int thread, unsigned int numberOfLines,
+                           bool dumpRegisters, bool errorDetection) override;
 
         virtual std::list<std::string> getAvailableInstructions() const {
             return std::list<std::string>();
