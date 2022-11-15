@@ -26,9 +26,8 @@
 namespace firestarter::environment::generic::payload {
 class BusyPayload final : public GenericPayload {
 public:
-  BusyPayload(asmjit::x86::Features const &supportedFeatures)
-      : X86Payload(supportedFeatures, {asmjit::x86::Features::Id::kSSE2},
-                   "SSE2", 2, 16) {}
+  BusyPayload()
+      : GenericPayload("BusyPayload", 2, 16) {}
 
   int compilePayload(
       std::vector<std::pair<std::string, unsigned>> const &proportion,
@@ -41,7 +40,7 @@ public:
             unsigned long long bufferSize) override;
 
   firestarter::environment::payload::Payload *clone() const override {
-    return new BusyPayload(this->supportedFeatures());
+    return new BusyPayload();
   };
 
 private:
