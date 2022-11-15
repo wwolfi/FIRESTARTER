@@ -13,6 +13,7 @@ SET(FIRESTARTER_FILES
 	firestarter/Environment/Generic/GenericEnvironment.cpp
 	firestarter/Environment/Generic/GenericCPUTopology.cpp
 	firestarter/Environment/Generic/Payload/GenericPayload.cpp
+	firestarter/Environment/Generic/Payload/BusyPayload.cpp
 
 	# here starts the x86 specific code
 
