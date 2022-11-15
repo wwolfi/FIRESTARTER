@@ -37,7 +37,7 @@ private:
 public:
   GenericPlatformConfig(std::string name, std::initializer_list<unsigned> threads,
                     payload::GenericPayload *payload)
-      : PlatformConfig(name, threads, 0, std::initializer_list<unsigned> test,
+      : PlatformConfig(name, threads, 0, {},
                        0, 0, payload){}
 
   bool isDefault() const override {
