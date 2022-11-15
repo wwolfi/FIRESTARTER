@@ -65,6 +65,36 @@ class GenericPayload : public environment::payload::Payload {
         unsigned long long highLoadFunction(unsigned long long *addrMem,
                                             volatile unsigned long long *addrHigh,
                                             unsigned long long iterations) override;
+
+        virtual ~GenericPayload() {
+
+        }
+
+        virtual bool isAvailable() const {
+            return false;
+        }
+
+        virtual int compilePayload(const std::vector<std::pair<std::string, unsigned int>> &proportion,
+                                   unsigned int instructionCacheSize,
+                                   const std::list<unsigned int> &dataCacheBufferSize, unsigned int ramBufferSize,
+                                   unsigned int thread, unsigned int numberOfLines, bool dumpRegisters,
+                                   bool errorDetection) {
+            return 0;
+        }
+
+        virtual std::list<std::string> getAvailableInstructions() const {
+            return std::list<std::string>();
+        }
+
+        virtual void init(unsigned long long int *memoryAddr, unsigned long long int bufferSize) {
+
+        }
+
+        virtual Payload *clone() const {
+            return nullptr;
+        }
+
+
     };
 
 } // namespace firestarter::environment::generic::payload
