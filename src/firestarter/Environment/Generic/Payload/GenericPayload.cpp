@@ -51,8 +51,7 @@ void GenericPayload::init(unsigned long long *memoryAddr,
     *((double *)(memoryAddr + i)) = 0.25 + (double)i * 8.0 * lastValue;
 }
 
-unsigned long long
-GenericPayload::highLoadFunction(unsigned long long *addrMem,
+unsigned long long GenericPayload::highLoadFunction(unsigned long long *addrMem,
                              volatile unsigned long long *addrHigh,
                              unsigned long long iterations) {
   return this->loadFunction(addrMem, addrHigh, iterations);

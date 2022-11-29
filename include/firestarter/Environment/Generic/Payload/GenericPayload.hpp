@@ -47,7 +47,7 @@ class GenericPayload : public environment::payload::Payload {
 
         // A generic implemenation for all x86 payloads
 #if defined(__clang__)
-        #pragma clang diagnostic push
+#pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Woverloaded-virtual"
 #endif
 #pragma GCC diagnostic push
