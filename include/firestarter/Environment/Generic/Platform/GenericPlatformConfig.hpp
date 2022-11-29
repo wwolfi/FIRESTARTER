@@ -41,10 +41,7 @@ public:
                        0, 0, payload), _currentThreads(currentThreads){}
 
   bool isDefault() const override {
-    return _family == _currentFamily &&
-           (std::find(_models.begin(), _models.end(), _currentModel) !=
-            _models.end()) &&
-           isAvailable();
+    return isAvailable();
   }
 };
 

@@ -54,3 +54,9 @@ void BusyPayload::init(unsigned long long *memoryAddr,
   GenericPayload::init(memoryAddr, bufferSize, 1.654738925401e-10,
                    1.654738925401e-15);
 }
+
+unsigned long long int
+BusyPayload::highLoadFunction(unsigned long long int *addrMem, volatile unsigned long long int *addrHigh,
+                              unsigned long long int iterations) {
+    return GenericPayload::highLoadFunction(addrMem, addrHigh, iterations);
+}

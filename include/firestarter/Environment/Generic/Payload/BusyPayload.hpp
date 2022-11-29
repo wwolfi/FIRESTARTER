@@ -29,9 +29,12 @@ public:
   BusyPayload(std::string name)
       : GenericPayload(name) {}
 
-  int compilePayload(unsigned thread) override;
+  int compilePayload(unsigned thread);
 
-  std::list<std::string> getAvailableInstructions() const override;
+    unsigned long long int highLoadFunction(unsigned long long int *addrMem, volatile unsigned long long int *addrHigh,
+                                            unsigned long long int iterations) override;
+
+    std::list<std::string> getAvailableInstructions() const override;
   void init(unsigned long long *memoryAddr,
             unsigned long long bufferSize) override;
 
