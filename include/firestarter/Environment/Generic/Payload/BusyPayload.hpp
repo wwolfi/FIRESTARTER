@@ -29,7 +29,7 @@ public:
   BusyPayload(std::string name)
       : GenericPayload(name) {}
 
-  int compilePayload(unsigned thread);
+  int compilePayload(unsigned thread) override;
 
   std::list<std::string> getAvailableInstructions() const override;
   void init(unsigned long long *memoryAddr,

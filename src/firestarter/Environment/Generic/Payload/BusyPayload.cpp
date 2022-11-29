@@ -32,9 +32,9 @@ int BusyPayload::compilePayload(unsigned thread) {
   // to reach the desired size
 
   // compute count of flops and memory access for performance report
-  long long unsigned a = 1000000000000000000;
+  long long unsigned a = 1;
   while(a>0){
-      a--;
+      a++;
   }
   return EXIT_SUCCESS;
 }
