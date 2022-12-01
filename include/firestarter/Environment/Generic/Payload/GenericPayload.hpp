@@ -29,8 +29,6 @@
 
 
 
-#define INIT_BLOCKSIZE 1024
-
 namespace firestarter::environment::generic::payload {
 
 class GenericPayload : public environment::payload::Payload {
@@ -77,13 +75,13 @@ class GenericPayload : public environment::payload::Payload {
         int compilePayload(const std::vector<std::pair<std::string, unsigned int>> &proportion,
                            unsigned int instructionCacheSize, const std::list<unsigned int> &dataCacheBufferSize,
                            unsigned int ramBufferSize, unsigned int thread, unsigned int numberOfLines,
-                           bool dumpRegisters, bool errorDetection) override;
+                           bool dumpRegisters, bool errorDetection) {return 0;};
 
         virtual std::list<std::string> getAvailableInstructions() const {
             return std::list<std::string>();
         }
 
-        virtual void init(unsigned long long int *memoryAddr, unsigned long long int bufferSize) {
+        virtual void init() {
 
         }
 

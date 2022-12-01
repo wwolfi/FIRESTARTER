@@ -40,27 +40,10 @@ void GenericPayload::lowLoadFunction(volatile unsigned long long *addrHigh,
 void GenericPayload::init(unsigned long long *memoryAddr,
                       unsigned long long bufferSize, double firstValue,
                       double lastValue) {
-  unsigned long long i = 0;
-
-  for (; i < INIT_BLOCKSIZE; i++)
-    *((double *)(memoryAddr + i)) = 0.25 + (double)i * 8.0 * firstValue;
-  for (; i <= bufferSize - INIT_BLOCKSIZE; i += INIT_BLOCKSIZE)
-    std::memcpy(memoryAddr + i, memoryAddr + i - INIT_BLOCKSIZE,
-                sizeof(unsigned long long) * INIT_BLOCKSIZE);
-  for (; i < bufferSize; i++)
-    *((double *)(memoryAddr + i)) = 0.25 + (double)i * 8.0 * lastValue;
 }
 
 unsigned long long GenericPayload::highLoadFunction(unsigned long long *addrMem,
                              volatile unsigned long long *addrHigh,
                              unsigned long long iterations) {
   return this->loadFunction(addrMem, addrHigh, iterations);
-}
-
-int GenericPayload::compilePayload(const std::vector<std::pair<std::string, unsigned int>> &proportion,
-                                   unsigned int instructionCacheSize,
-                                   const std::list<unsigned int> &dataCacheBufferSize, unsigned int ramBufferSize,
-                                   unsigned int thread, unsigned int numberOfLines, bool dumpRegisters,
-                                   bool errorDetection) {
-    return 0;
 }

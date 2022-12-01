@@ -70,12 +70,6 @@ private:
 
     std::list<platform::GenericPlatformConfig *> platformConfigs;
 
-    const std::list<std::function<platform::GenericPlatformConfig *(unsigned)>>
-            fallbackPlatformConfigsCtor = {
-            REGISTER(TestConfig)};
-
-    std::list<platform::GenericPlatformConfig *> fallbackPlatformConfigs;
-
     //platform::GenericPlatformConfig * platformConfigs = REGISTER(GenericConfig);
 
 

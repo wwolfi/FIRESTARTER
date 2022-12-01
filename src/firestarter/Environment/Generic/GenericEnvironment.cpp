@@ -29,6 +29,11 @@
 using namespace firestarter::environment::generic;
 
 void GenericEnvironment::evaluateFunctions() {
+    for (auto ctor : this->platformConfigsCtor) {
+      // add asmjit for model and family detection
+      this->platformConfigs.push_back(
+          ctor(this->topology().numThreadsPerCore()));
+    }
 
 }
 
@@ -36,6 +41,40 @@ int GenericEnvironment::selectFunction(unsigned functionId,
                                    bool allowUnavailablePayload) {
   unsigned id = 1;
   std::string defaultPayloadName("");
+
+  // if functionId is 0 get the default or fallback
+  for (auto config : this->platformConfigs) {
+    for (auto const &[thread, functionName] : config->getThreadMap()) {
+      // the selected function
+      if (id == functionId) {
+        if (!config->isAvailable()) {
+          log::error() << "Function " << functionId << " (\"" << functionName
+                       << "\") requires " << config->payload().name()
+                       << ", which is not supported by the processor.";
+          if (!allowUnavailablePayload) {
+            return EXIT_FAILURE;
+          }
+        }
+        // found function
+        this->_selectedConfig =
+            new ::firestarter::environment::platform::RuntimeConfig(
+                *config, thread, this->topology().instructionCacheSize());
+        return EXIT_SUCCESS;
+      }
+      // default function
+      if (0 == functionId && config->isDefault()) {
+        if (thread == this->topology().numThreadsPerCore()) {
+          this->_selectedConfig =
+              new ::firestarter::environment::platform::RuntimeConfig(
+                  *config, thread, this->topology().instructionCacheSize());
+          return EXIT_SUCCESS;
+        } else {
+          defaultPayloadName = config->payload().name();
+        }
+      }
+      id++;
+    }
+  }
 
 
   // no default found
@@ -52,33 +91,6 @@ int GenericEnvironment::selectFunction(unsigned functionId,
                 << " is not supported by this version of FIRESTARTER!\n"
                 << "Check project website for updates.";
 
-    // loop over available implementation and check if they are marked as
-    // fallback
-      for (auto config : this->fallbackPlatformConfigs) {
-          if (config->isAvailable()) {
-              auto selectedThread = 0;
-              auto selectedFunctionName = std::string("");
-              for (auto const &[thread, functionName]: config->getThreadMap()) {
-                  if (thread == this->topology().numThreadsPerCore()) {
-                      selectedThread = thread;
-                      selectedFunctionName = functionName;
-                  }
-              }
-              if (selectedThread == 0) {
-                  selectedThread = config->getThreadMap().begin()->first;
-                  selectedFunctionName = config->getThreadMap().begin()->second;
-              }
-              this->_selectedConfig =
-                      new ::firestarter::environment::platform::RuntimeConfig(
-                              *config, selectedThread,
-                              this->topology().instructionCacheSize());
-              log::warn() << "Using function " << selectedFunctionName
-                          << " as fallback.\n"
-                          << "You can use the parameter --function to try other "
-                             "functions.";
-              return EXIT_SUCCESS;
-          }
-      }
     log::error() << "No fallback implementation found for available ISA "
                     "extensions.";
     return EXIT_FAILURE;

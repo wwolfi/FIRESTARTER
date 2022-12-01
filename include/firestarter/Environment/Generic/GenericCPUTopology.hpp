@@ -36,33 +36,24 @@ namespace firestarter::environment::generic {
             return this->featureList;
         }
 
-        std::string const &vendor() const override { return this->_vendor; }
+        std::string const &vendor() const override { return _vendor; }
 
-        std::string const &model() const override { return this->_model; }
+        std::string const &model() const override { return _model; }
 
         unsigned long long clockrate() const override;
 
         unsigned long long timestamp() const override;
 
-    private:
-        bool hasRdtsc() const { return this->_hasRdtsc; }
+private:
+  std::list<std::string> featureList;
+  std::string _vendor;
+  std::string _model;
 
-        bool hasInvariantRdtsc() const { return this->_hasInvariantRdtsc; }
-
-        void cpuid(unsigned long long *a, unsigned long long *b,
-                   unsigned long long *c, unsigned long long *d) const;
-
-        std::list<std::string> featureList;
-
-        bool _hasRdtsc;
-        bool _hasInvariantRdtsc;
-        std::string _vendor;
-        std::string _model;
     };
 
-    inline std::ostream &operator<<(std::ostream &stream,
-                                    GenericCPUTopology const &cpuTopology) {
-        return cpuTopology.print(stream);
-    }
+  inline std::ostream &operator<<(std::ostream &stream,
+                                  GenericCPUTopology const &cpuTopology) {
+      return cpuTopology.print(stream);
+  }
 
 } // namespace firestarter::environment::generic
