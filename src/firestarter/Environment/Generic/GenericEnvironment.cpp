@@ -97,7 +97,7 @@ int GenericEnvironment::selectFunction(unsigned functionId,
           if (config->isAvailable()) {
               auto selectedThread = 0;
               auto selectedFunctionName = std::string("");
-              for (auto const &[thread, functionName] : config->getThreadMap()) {
+              for (auto const &[thread, functionName]: config->getThreadMap()) {
                   if (thread == this->topology().numThreadsPerCore()) {
                       selectedThread = thread;
                       selectedFunctionName = functionName;
@@ -117,6 +117,7 @@ int GenericEnvironment::selectFunction(unsigned functionId,
                              "functions.";
               return EXIT_SUCCESS;
           }
+      }
 
     log::error() << "No fallback implementation found for available ISA "
                     "extensions.";
