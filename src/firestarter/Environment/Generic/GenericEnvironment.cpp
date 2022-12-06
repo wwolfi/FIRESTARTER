@@ -91,6 +91,33 @@ int GenericEnvironment::selectFunction(unsigned functionId,
                 << " is not supported by this version of FIRESTARTER!\n"
                 << "Check project website for updates.";
 
+      // loop over available implementation and check if they are marked as
+      // fallback
+      for (auto config : this->fallbackPlatformConfigs) {
+          if (config->isAvailable()) {
+              auto selectedThread = 0;
+              auto selectedFunctionName = std::string("");
+              for (auto const &[thread, functionName] : config->getThreadMap()) {
+                  if (thread == this->topology().numThreadsPerCore()) {
+                      selectedThread = thread;
+                      selectedFunctionName = functionName;
+                  }
+              }
+              if (selectedThread == 0) {
+                  selectedThread = config->getThreadMap().begin()->first;
+                  selectedFunctionName = config->getThreadMap().begin()->second;
+              }
+              this->_selectedConfig =
+                      new ::firestarter::environment::platform::RuntimeConfig(
+                              *config, selectedThread,
+                              this->topology().instructionCacheSize());
+              log::warn() << "Using function " << selectedFunctionName
+                          << " as fallback.\n"
+                          << "You can use the parameter --function to try other "
+                             "functions.";
+              return EXIT_SUCCESS;
+          }
+
     log::error() << "No fallback implementation found for available ISA "
                     "extensions.";
     return EXIT_FAILURE;

@@ -44,6 +44,9 @@ public:
       for (auto const &config : platformConfigs) {
           delete config;
       }
+      for (auto const &config : fallbackPlatformConfigs) {
+          delete config;
+      }
   }
 
   GenericCPUTopology const &topology() {
@@ -66,9 +69,18 @@ private:
 
     const std::list<std::function<platform::GenericPlatformConfig *(unsigned)>>
     platformConfigsCtor = {
-            REGISTER(TestConfig)};
+            REGISTER(TestConfig)
+    };
 
     std::list<platform::GenericPlatformConfig *> platformConfigs;
+
+    // List of fallback PlatformConfig. Add one for each x86 extension.
+    const std::list<std::function<platform::GenericPlatformConfig *(unsigned)>>
+    fallbackPlatformConfigsCtor = {
+            REGISTER(TestConfig)
+    };
+
+    std::list<platform::GenericPlatformConfig *> fallbackPlatformConfigs;
 
     //platform::GenericPlatformConfig * platformConfigs = REGISTER(GenericConfig);
 
