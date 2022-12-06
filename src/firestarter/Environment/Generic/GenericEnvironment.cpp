@@ -34,6 +34,10 @@ void GenericEnvironment::evaluateFunctions() {
       this->platformConfigs.push_back(
           ctor(this->topology().numThreadsPerCore()));
     }
+    for (auto ctor : this->fallbackPlatformConfigsCtor) {
+        this->fallbackPlatformConfigs.push_back(
+                ctor(this->topology().numThreadsPerCore()));
+    }
 
 }
 
