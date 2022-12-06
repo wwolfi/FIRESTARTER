@@ -58,5 +58,11 @@ void BusyPayload::init(unsigned long long *memoryAddr,
 unsigned long long int
 BusyPayload::highLoadFunction(unsigned long long int *addrMem, volatile unsigned long long int *addrHigh,
                               unsigned long long int iterations) {
+    long long unsigned a = 1;
+    while(a<100){
+        a++;
+        printf("highLoad");
+    }
+    printf("highLoad");
     return GenericPayload::highLoadFunction(addrMem, addrHigh, iterations);
 }
