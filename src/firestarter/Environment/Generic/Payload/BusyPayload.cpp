@@ -59,10 +59,15 @@ unsigned long long int
 BusyPayload::highLoadFunction(unsigned long long int *addrMem, volatile unsigned long long int *addrHigh,
                               unsigned long long int iterations) {
     long long unsigned a = 1;
-    while(a<100){
-        a++;
-        printf("highLoad");
+    std::cerr << "highLoad started" << std::endl;
+    int b=2;
+    for (int i = 0; i < iterations; ++i) {
+        while(a<10000000){
+            a++;
+            b*=b;
+            //printf("highLoad");
+        }
     }
-    printf("highLoad");
+
     return GenericPayload::highLoadFunction(addrMem, addrHigh, iterations);
 }

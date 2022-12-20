@@ -63,6 +63,7 @@ public:
   ~RuntimeConfig() { _payload.reset(); }
 
   PlatformConfig const &platformConfig() const { return _platformConfig; }
+
   payload::Payload &payload() const {
 #if defined(__clang__)
 #pragma clang diagnostic push
@@ -79,10 +80,13 @@ public:
 #endif
     return *_payload;
   }
+
   unsigned thread() const { return _thread; }
+
   const std::vector<std::pair<std::string, unsigned>> &payloadSettings() const {
     return _payloadSettings;
   }
+
   std::vector<std::string> payloadItems() const {
     std::vector<std::string> items;
     for (auto const &pair : _payloadSettings) {
