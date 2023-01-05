@@ -24,6 +24,7 @@
 #include <type_traits>
 
 #include <firestarter/Environment/Generic/Payload/GenericPayload.hpp>
+#include <firestarter/Environment/Payload/Payload.hpp>
 
 using namespace firestarter::environment::generic::payload;
 

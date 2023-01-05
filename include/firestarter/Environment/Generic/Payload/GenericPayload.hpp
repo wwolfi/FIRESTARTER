@@ -32,18 +32,18 @@
 namespace firestarter::environment::generic::payload {
 
 class GenericPayload : public environment::payload::Payload {
-    protected:
-        // typedef int (*LoadFunction)(firestarter::ThreadData *);
-        typedef unsigned long long (*LoadFunction)(unsigned long long *,
-                                                   volatile unsigned long long *,
-                                                   unsigned long long);
-        LoadFunction loadFunction = nullptr;
+protected:
+    // typedef int (*LoadFunction)(firestarter::ThreadData *);
+    typedef unsigned long long (*LoadFunction)(unsigned long long *,
+                                               volatile unsigned long long *,
+                                               unsigned long long);
+    LoadFunction loadFunction = nullptr;
 
     public:
         GenericPayload(std::string name)
                 : Payload(name, 0, 0) {}
 
-        // A generic implemenation for all x86 payloads
+        // A generic implemenation for all payloads
 #if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Woverloaded-virtual"
@@ -64,31 +64,13 @@ class GenericPayload : public environment::payload::Payload {
                                             volatile unsigned long long *addrHigh,
                                             unsigned long long iterations) override;
 
-        virtual ~GenericPayload() {
+/*        virtual ~GenericPayload() {
 
-        }
+        }*/
 
-        virtual bool isAvailable() const {
+        bool isAvailable() const override {
             return true;
         }
-
-        int compilePayload(const std::vector<std::pair<std::string, unsigned int>> &proportion,
-                           unsigned int instructionCacheSize, const std::list<unsigned int> &dataCacheBufferSize,
-                           unsigned int ramBufferSize, unsigned int thread, unsigned int numberOfLines,
-                           bool dumpRegisters, bool errorDetection) {return 0;};
-
-        virtual std::list<std::string> getAvailableInstructions() const {
-            return std::list<std::string>();
-        }
-
-        virtual void init() {
-
-        }
-
-        virtual Payload *clone() const {
-            return nullptr;
-        }
-
     };
 
 } // namespace firestarter::environment::generic::payload
