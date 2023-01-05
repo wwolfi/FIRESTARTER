@@ -28,19 +28,22 @@ class BusyPayload final : public GenericPayload {
 public:
   BusyPayload(std::string name)
       : GenericPayload(name) {}
-
-  int compilePayload(unsigned thread);
-
-    unsigned long long int highLoadFunction(unsigned long long int *addrMem, volatile unsigned long long int *addrHigh,
+      
+   /* unsigned long long int highLoadFunction(unsigned long long int *addrMem, volatile unsigned long long int *addrHigh,
                                             unsigned long long int iterations) override;
-
+    */
     std::list<std::string> getAvailableInstructions() const override;
   void init(unsigned long long *memoryAddr,
             unsigned long long bufferSize) override;
 
   firestarter::environment::payload::Payload *clone() const override {
     return new BusyPayload("clonedPayload");
-  };
+  }
+
+    int compilePayload(const std::vector<std::pair<std::string, unsigned int>> &proportion,
+                       unsigned int instructionCacheSize, const std::list<unsigned int> &dataCacheBufferSize,
+                       unsigned int ramBufferSize, unsigned int thread, unsigned int numberOfLines, bool dumpRegisters,
+                       bool errorDetection) override;;
 
 private:
   const std::map<std::string, unsigned> instructionFlops = {

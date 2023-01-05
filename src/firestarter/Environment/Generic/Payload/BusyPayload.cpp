@@ -32,11 +32,22 @@ int BusyPayload::compilePayload(unsigned thread) {
   // to reach the desired size
 
   // compute count of flops and memory access for performance report
-  long long unsigned a = 1;
+  long long unsigned a = 10000000;
   while(a>0){
-      a++;
+      a--;
   }
   return EXIT_SUCCESS;
+}
+
+int BusyPayload::compilePayload(const std::vector<std::pair<std::string, unsigned int>> &proportion,
+                                unsigned int instructionCacheSize, const std::list<unsigned int> &dataCacheBufferSize,
+                                unsigned int ramBufferSize, unsigned int thread, unsigned int numberOfLines,
+                                bool dumpRegisters, bool errorDetection) {
+    long long unsigned a = 10000000;
+    while(a>0){
+        a--;
+    }
+    return EXIT_SUCCESS;
 }
 
 std::list<std::string> BusyPayload::getAvailableInstructions() const {
@@ -54,7 +65,7 @@ void BusyPayload::init(unsigned long long *memoryAddr,
   GenericPayload::init(memoryAddr, bufferSize, 1.654738925401e-10,
                    1.654738925401e-15);
 }
-
+/*
 unsigned long long int
 BusyPayload::highLoadFunction(unsigned long long int *addrMem, volatile unsigned long long int *addrHigh,
                               unsigned long long int iterations) {
@@ -71,3 +82,4 @@ BusyPayload::highLoadFunction(unsigned long long int *addrMem, volatile unsigned
 
     return GenericPayload::highLoadFunction(addrMem, addrHigh, iterations);
 }
+*/
