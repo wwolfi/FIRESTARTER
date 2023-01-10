@@ -26,7 +26,7 @@
 #include <utility>
 
 using namespace firestarter::environment::generic::payload;
-
+/*
 int BusyPayload::compilePayload(unsigned thread) {
   // Compute the sequence of instruction groups and the number of its repetitions
   // to reach the desired size
@@ -38,7 +38,7 @@ int BusyPayload::compilePayload(unsigned thread) {
   }
   return EXIT_SUCCESS;
 }
-
+*/
 int BusyPayload::compilePayload(const std::vector<std::pair<std::string, unsigned int>> &proportion,
                                 unsigned int instructionCacheSize, const std::list<unsigned int> &dataCacheBufferSize,
                                 unsigned int ramBufferSize, unsigned int thread, unsigned int numberOfLines,

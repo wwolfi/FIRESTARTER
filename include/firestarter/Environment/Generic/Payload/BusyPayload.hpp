@@ -28,7 +28,7 @@ class BusyPayload final : public GenericPayload {
 public:
   BusyPayload(std::string name)
       : GenericPayload(name) {}
-      
+
    /* unsigned long long int highLoadFunction(unsigned long long int *addrMem, volatile unsigned long long int *addrHigh,
                                             unsigned long long int iterations) override;
     */
