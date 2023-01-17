@@ -41,7 +41,7 @@ protected:
 
     public:
         GenericPayload(std::string name)
-                : Payload(name, 0, 0) {}
+                : Payload(name, 2, 16) {}
 
         // A generic implemenation for all payloads
 #if defined(__clang__)
